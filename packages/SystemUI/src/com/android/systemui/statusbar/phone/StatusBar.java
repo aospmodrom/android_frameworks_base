@@ -54,6 +54,7 @@ import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentCallbacks2;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -963,6 +964,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 = (MediaSessionManager) mContext.getSystemService(Context.MEDIA_SESSION_SERVICE);
         // TODO: use MediaSessionManager.SessionListener to hook us up to future updates
         // in session state
+
+        mSbSettingsObserver.observe();
+        mSbSettingsObserver.update();
 
         // Lastly, call to the icon policy to install/update all the icons.
         mIconPolicy = new PhoneStatusBarPolicy(mContext, mIconController);
@@ -5838,6 +5842,50 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateNotifications();
         }
     };
+
+    private SbSettingsObserver mSbSettingsObserver = new SbSettingsObserver(mHandler);
+    private class SbSettingsObserver extends ContentObserver {
+        SbSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SHOW_BATTERY_PERCENT),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.STATUS_BAR_BATTERY_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            update();
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.SHOW_BATTERY_PERCENT))
+                    || uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.STATUS_BAR_BATTERY_STYLE))) {
+                updateBatterySettings();
+            }
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            updateBatterySettings();
+        }
+    }
+
+    public void updateBatterySettings() {
+        if (mStatusBarView != null) {
+            mStatusBarView.updateBatterySettings();
+        }
+        if (mKeyguardStatusBar != null) {
+            mKeyguardStatusBar.updateBatterySettings();
+        }
+    }
 
     private RemoteViews.OnClickHandler mOnClickHandler = new RemoteViews.OnClickHandler() {
 
