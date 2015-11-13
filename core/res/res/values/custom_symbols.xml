@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <!-- Vendor mismatched fingerprint warning -->
+  <java-symbol type="string" name="system_error_vendorprint" />
+</resources>
