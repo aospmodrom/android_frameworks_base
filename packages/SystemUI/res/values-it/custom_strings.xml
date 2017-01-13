@@ -3,4 +3,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Power menu -->
     <string name="global_action_restart_advanced">Avanzate</string>
+
+    <!-- Ambient display and lift gesture Tile -->
+    <string name="quick_settings_doze_notifications_label">Notifiche Ambient</string>
 </resources>
