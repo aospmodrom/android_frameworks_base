@@ -34,4 +34,10 @@
 
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Screenshot Deleted</string>
+
+    <!-- Power menu -->
+    <string name="global_action_restart_advanced">Advanced</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string>
+    <string name="global_action_restart_ui">SystemUI</string>
 </resources>
