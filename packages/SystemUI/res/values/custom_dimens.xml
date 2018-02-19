@@ -12,6 +12,8 @@
      limitations under the License.
 -->
 <resources>
+    <dimen name="status_bar_left_clock_end_padding">5dp</dimen>
+
     <!-- Floating action button -->
     <dimen name="floating_action_button_height">54dp</dimen>
     <dimen name="floating_action_button_width">54dp</dimen>

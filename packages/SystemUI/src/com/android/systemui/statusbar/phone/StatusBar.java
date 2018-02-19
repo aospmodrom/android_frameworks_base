@@ -189,6 +189,7 @@ import com.android.systemui.plugins.statusbar.NotificationSwipeActionHelper.Snoo
 import com.android.systemui.qs.QSFragment;
 import com.android.systemui.qs.QSPanel;
 import com.android.systemui.qs.QSTileHost;
+import com.android.systemui.qs.QuickStatusBarHeader;
 import com.android.systemui.qs.car.CarQSFragment;
 import com.android.systemui.recents.Recents;
 import com.android.systemui.recents.ScreenPinningRequest;
@@ -456,6 +457,8 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected KeyguardStatusBarView mKeyguardStatusBar;
     boolean mLeaveOpenOnKeyguardHide;
     KeyguardIndicationController mKeyguardIndicationController;
+
+    private QuickStatusBarHeader mQuickStatusBarHeader;
 
     // Keyguard is going away soon.
     private boolean mKeyguardGoingAway;
@@ -5884,6 +5887,12 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
         if (mKeyguardStatusBar != null) {
             mKeyguardStatusBar.updateBatterySettings();
+        }
+    }
+
+    public void updateQsbhClock() {
+        if (mQuickStatusBarHeader != null) {
+            mQuickStatusBarHeader.updateQsbhClock();
         }
     }
 
